@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Google.Apis.Gmail.v1.Data;
 
-namespace CleanBox
+namespace InboxDownloader
 {
     /// <summary>
     /// Handles the download from google & write to db

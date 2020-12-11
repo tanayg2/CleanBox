@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.808.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanBox", "CleanBox\CleanBox.csproj", "{A6737972-5251-4889-B921-46FE92D9BBAD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InboxDownloader", "InboxDownloader\InboxDownloader.csproj", "{A6737972-5251-4889-B921-46FE92D9BBAD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InboxRetriever", "InboxRetriever\InboxRetriever.csproj", "{86A65D5A-C619-4F35-A1DF-C6D390FF8CA6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GmailInboxLibrary", "GmailInboxLibrary\GmailInboxLibrary.csproj", "{28AB74BC-3C29-4186-A07D-727F237D3F2C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{A6737972-5251-4889-B921-46FE92D9BBAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6737972-5251-4889-B921-46FE92D9BBAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6737972-5251-4889-B921-46FE92D9BBAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86A65D5A-C619-4F35-A1DF-C6D390FF8CA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86A65D5A-C619-4F35-A1DF-C6D390FF8CA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86A65D5A-C619-4F35-A1DF-C6D390FF8CA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86A65D5A-C619-4F35-A1DF-C6D390FF8CA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28AB74BC-3C29-4186-A07D-727F237D3F2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28AB74BC-3C29-4186-A07D-727F237D3F2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28AB74BC-3C29-4186-A07D-727F237D3F2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28AB74BC-3C29-4186-A07D-727F237D3F2C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
