@@ -44,9 +44,11 @@ namespace InboxDownloader
         {
             this.dbName = dbName;
             this.connectionString = "Data Source=" + dbName + ".sqlite;Version=3;";
+            InitializeAndConnectToDB();
+            CreateTable("inbox", inboxTableString);
         }
-        
-        
+
+
         private void InitializeAndConnectToDB()
         {
             //TODO: in the final publish, db shouldn't be created by code
@@ -66,6 +68,43 @@ namespace InboxDownloader
             string creationString = "CREATE TABLE " + tableName + "\n(" + tableString + ")";
             SQLiteCommand command = new SQLiteCommand(creationString, dbConnection);
             command.ExecuteNonQuery();
+        }
+
+        public int Write(List<Message> inbox)
+        {
+            //TODO: see if there's a way to do this in one efcore write rather than multiple
+            int count = 0;
+            foreach (Message message in inbox)
+            {
+                count += Write(message);
+            }
+
+            return count;
+        }
+
+        public int Write(Message message)
+        {
+            //TODO: add functionality to write single message to inbox table, return number of lines (should always be 1)
+            return 0;
+        }
+
+        public bool RemoveMessage(Message message)
+        {
+            //TODO: implement
+        }
+
+        public bool RemoveMessages(List<Message> messages)
+        {
+            bool success = true;
+            foreach (Message message in messages)
+            {
+                if (!RemoveMessage(message))
+                {
+                    success = false;
+                }
+            }
+
+            return success;
         }
         
         
