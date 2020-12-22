@@ -9,43 +9,64 @@ namespace InboxDownloader
     public class DBWriter
     {
         private SQLiteConnection dbConnection { get; set; }
-        private string dbName { get; set; }
+        private string userId { get; set; }
         private string connectionString { get; set; }
-        private string inboxTableString = "id VARCHAR(20), "
-                                        + "threadId VARCHAR(20), "
-                                        //labelIds
-                                        + "snippet VARCHAR(100), "
-                                        + "historyId VARCHAR(20), "
-                                        + "internalDate VARCHAR(20), "
-                                        //payload
-                                        + "sizeEstimate INT, "
-                                        + "raw VARCHAR(2000)";
+        // private string inboxTableString = "id VARCHAR(20), "
+        //                                 + "threadId VARCHAR(20), "
+        //                                 //labelIds
+        //                                 + "snippet VARCHAR(100), "
+        //                                 + "historyId VARCHAR(20), "
+        //                                 + "internalDate VARCHAR(20), "
+        //                                 //payload
+        //                                 + "sizeEstimate INT, "
+        //                                 + "raw VARCHAR(2000)";
+        //
+        // private string labelIdsTableString = "messageId VARCHAR(20), "
+        //                                      + "labelId VARCHAR(20)";
+        //
+        // private string messagePartTableString = "messageId VARCHAR(20), "
+        //                                         + "partId VARCHAR(20), "
+        //                                         + "mimeType VARCHAR(20)";
+        //
+        // private string headerTableString = "messageId VARCHAR(20), "
+        //                                    + "partId VARCHAR(20), "
+        //                                    + "name VARCHAR(20), "
+        //                                    + "value VARCHAR(20)";
+        //
+        // private string messagePartBodyTableString = "messageId VARCHAR(20), "
+        //                                             + "partId VARCHAR(20), "
+        //                                             + "attachmentId VARCHAR(20), "
+        //                                             + "size INT, "
+        //                                             + "data VARCHAR(1000)";
+        private string userTableString = "userId VARCHAR(100) PRIMARY KEY"; 
+        
+        private string messageTableString = "messageId VARCHAR(20) PRIMARY KEY, "
+                                            + "internalDate VARCHAR(32)";
 
-        private string labelIdsTableString = "messageId VARCHAR(20), "
-                                             + "labelId VARCHAR(20)";
+        private string labelsTableString = "messageId VARCHAR(20) PRIMARY KEY,"
+                                           + "internalDate VARCHAR(32)";
 
-        private string messagePartTableString = "messageId VARCHAR(20), "
-                                                + "partId VARCHAR(20), "
-                                                + "mimeType VARCHAR(20)";
+        //TODO: make sure sqlite generates uid
+        private string headersTableString = "uid INTEGER PRIMARY KEY, "
+                                            + "messageId VARCHAR(20), "
+                                            + "name VARCHAR(20), "
+                                            + "value VARCHAR(150)";
 
-        private string headerTableString = "messageId VARCHAR(20), "
-                                           + "partId VARCHAR(20), "
-                                           + "name VARCHAR(20), "
-                                           + "value VARCHAR(20)";
+        private string sendersTableString = "messageId VARCHAR(20), "
+                                            + "senderId VARCHAR(150)";
+        
+        //TODO: moses to look more into this
+        private string messagePartsTableString = "messageId VARCHAR(20) PRIMARY KEY, "
+                                                 + "partId VARCHAR(2)";
 
-        private string messagePartBodyTableString = "messageId VARCHAR(20), "
-                                                    + "partId VARCHAR(20), "
-                                                    + "attachmentId VARCHAR(20), "
-                                                    + "size INT, "
-                                                    + "data VARCHAR(1000)";
-                                                
+        private string messagePrioritiesTableString = "categoryName VARCHAR(100) PRIMARY KEY, "
+                                                      + "categoryPriority INTEGER";
 
-        public DBWriter(string dbName)
+        public DBWriter(string userId)
         {
-            this.dbName = dbName;
-            this.connectionString = "Data Source=" + dbName + ".sqlite;Version=3;";
+            this.userId = userId;
+            this.connectionString = "Data Source=" + userId + ".sqlite;Version=3;";
             InitializeAndConnectToDB();
-            CreateTable("inbox", inboxTableString);
         }
 
 
@@ -53,14 +74,17 @@ namespace InboxDownloader
         {
             //TODO: in the final publish, db shouldn't be created by code
             //Create db
-            SQLiteConnection.CreateFile(dbName + ".sqlite");
+            SQLiteConnection.CreateFile(userId + ".sqlite");
             
             //Connect to db
             dbConnection = new SQLiteConnection(connectionString);
             dbConnection.Open();
             
             //Create tables
-            CreateTable("inbox", inboxTableString);
+            CreateTable("MESSAGES#" + userId, messageTableString);
+            CreateTable("HEADERS#" + userId, headersTableString);
+            CreateTable("MESSAGEPARTS#" + userId, messagePartsTableString);
+            CreateTable("MESSAGEPRIORITIES#" + userId, messagePrioritiesTableString);
         }
 
         private void CreateTable(string tableName, string tableString)
@@ -88,24 +112,24 @@ namespace InboxDownloader
             return 0;
         }
 
-        public bool RemoveMessage(Message message)
-        {
-            //TODO: implement
-        }
-
-        public bool RemoveMessages(List<Message> messages)
-        {
-            bool success = true;
-            foreach (Message message in messages)
-            {
-                if (!RemoveMessage(message))
-                {
-                    success = false;
-                }
-            }
-
-            return success;
-        }
+        //TODO: implement
+        // public bool RemoveMessage(Message message)
+        // {
+        // }
+        //
+        // public bool RemoveMessages(List<Message> messages)
+        // {
+        //     bool success = true;
+        //     foreach (Message message in messages)
+        //     {
+        //         if (!RemoveMessage(message))
+        //         {
+        //             success = false;
+        //         }
+        //     }
+        //
+        //     return success;
+        // }
         
         
     }

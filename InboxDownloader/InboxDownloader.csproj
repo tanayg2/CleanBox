@@ -9,6 +9,7 @@
   <ItemGroup>
     <PackageReference Include="Google.Apis.Gmail.v1" Version="1.49.0.2167" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="5.0.1" />
+    <PackageReference Include="OptimizedPriorityQueue" Version="5.0.0" />
     <PackageReference Include="SQLite" Version="3.13.0" />
     <PackageReference Include="System.Data.SQLite" Version="1.0.113.6" />
     <PackageReference Include="System.Linq" Version="4.3.0" />

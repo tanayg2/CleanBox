@@ -91,7 +91,6 @@ namespace InboxDownloader
                     foreach (var email in response.Messages)
                     {
                         Console.WriteLine(count + ": " + email.Id);
-
                         referenceInbox.Add(email);
 
                         count++;
