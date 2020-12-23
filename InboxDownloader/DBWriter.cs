@@ -69,7 +69,6 @@ namespace InboxDownloader
             InitializeAndConnectToDB();
         }
 
-
         private void InitializeAndConnectToDB()
         {
             //TODO: in the final publish, db shouldn't be created by code
