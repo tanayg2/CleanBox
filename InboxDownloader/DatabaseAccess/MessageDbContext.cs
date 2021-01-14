@@ -7,9 +7,9 @@ namespace InboxDownloader.DatabaseAccess
     {
         public System.Data.Entity.DbSet<MessagesModel> MessagesModels { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        protected override void OnModelCreating(System.Data.Entity.DbModelBuilder modelBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=")
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

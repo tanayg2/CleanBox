@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 using Google.Apis.Gmail.v1.Data;
 using GmailInboxLibrary;
+using InboxDownloader.DatabaseAccess;
 
 namespace InboxDownloader
 {
@@ -80,10 +81,10 @@ namespace InboxDownloader
             dbConnection.Open();
             
             //Create tables
-            CreateTable("MESSAGES#" + userId, messageTableString);
-            CreateTable("HEADERS#" + userId, headersTableString);
-            CreateTable("MESSAGEPARTS#" + userId, messagePartsTableString);
-            CreateTable("MESSAGEPRIORITIES#" + userId, messagePrioritiesTableString);
+            CreateTable("MESSAGES", messageTableString);
+            CreateTable("HEADERS", headersTableString);
+            CreateTable("MESSAGEPARTS", messagePartsTableString);
+            CreateTable("MESSAGEPRIORITIES", messagePrioritiesTableString);
         }
 
         private void CreateTable(string tableName, string tableString)
@@ -97,9 +98,19 @@ namespace InboxDownloader
         {
             //TODO: see if there's a way to do this in one efcore write rather than multiple
             int count = 0;
-            foreach (Message message in inbox)
+            using (var db = new MessageDbContext())
             {
-                count += Write(message);
+
+                foreach (Message message in inbox)
+                {
+                    var messageModel = new MessagesModel()
+                    {
+                        messageId = message.Id,
+                        internalDate = (long)message.InternalDate
+                    };
+                    db.MessagesModels.Add(messageModel);
+                }
+                count = db.SaveChanges();
             }
 
             return count;
@@ -107,8 +118,19 @@ namespace InboxDownloader
 
         public int Write(Message message)
         {
+            int count = 0;
             //TODO: add functionality to write single message to inbox table, return number of lines (should always be 1)
-            return 0;
+            using (var db = new MessageDbContext())
+            {
+                var messageModel = new MessagesModel()
+                {
+                    messageId = message.Id,
+                    internalDate = (long)message.InternalDate //Make sure this saves properly
+                };
+                db.MessagesModels.Add(messageModel);
+                count = db.SaveChanges();
+            }
+            return count;
         }
 
         //TODO: implement

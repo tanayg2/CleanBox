@@ -13,8 +13,12 @@ namespace InboxDownloader
         {
             InboxReceiver inboxReceiver = new InboxReceiver("me");
             List<Message> unsortedInbox = inboxReceiver.SyncMailClient();
-            
-            //TODO: Write inbox to db
+
+            DBWriter writer = new DBWriter("me");
+            writer.Write(unsortedInbox);
+
+            Console.WriteLine("Wrote unsorted inbox to db");
+
 
         }
     }

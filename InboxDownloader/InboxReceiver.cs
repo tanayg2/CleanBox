@@ -13,7 +13,7 @@ namespace InboxDownloader
     public class InboxReceiver
     {
         private static string[] Scopes = { GmailService.Scope.GmailReadonly };
-        private static string ApplicationName = "SortBySender";
+        private static string ApplicationName = "CleanBox";
         private string UserID = "me";
         private GmailService service;
 

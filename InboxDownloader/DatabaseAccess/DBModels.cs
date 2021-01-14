@@ -8,7 +8,7 @@ namespace InboxDownloader.DatabaseAccess
         [Key]
         public string messageId { get; set; }
         [Required]
-        public string internalDate { get; set; }
+        public long internalDate { get; set; }
     }
 
     public class LabelsModel
@@ -16,7 +16,7 @@ namespace InboxDownloader.DatabaseAccess
         [Key]
         public string messageId { get; set; }
         [Required]
-        public string internalDate { get; set; }
+        public long internalDate { get; set; }
     }
 
     public class HeadersModel
