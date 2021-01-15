@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore.Sqlite;
 
-namespace InboxDownloader.DatabaseAccess
+namespace Cleanbox.DatabaseAccess
 {
     public class MessagesModel
     {
@@ -52,6 +52,7 @@ namespace InboxDownloader.DatabaseAccess
         [Key]
         public string categoryName { get; set; }
         [Required]
-        public string categoryPriority { get; set; }
+        public float categoryPriority { get; set; }
+
     }
 }

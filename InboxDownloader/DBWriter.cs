@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 using Google.Apis.Gmail.v1.Data;
 using GmailInboxLibrary;
-using InboxDownloader.DatabaseAccess;
+using Cleanbox.DatabaseAccess;
 
-namespace InboxDownloader
+namespace Cleanbox
 {
     public class DBWriter
     {
@@ -94,9 +94,8 @@ namespace InboxDownloader
             command.ExecuteNonQuery();
         }
 
-        public int Write(List<Message> inbox)
+        public int WriteToMessagesTable(List<Message> inbox)
         {
-            //TODO: see if there's a way to do this in one efcore write rather than multiple
             int count = 0;
             using (var db = new MessageDbContext())
             {
@@ -116,22 +115,36 @@ namespace InboxDownloader
             return count;
         }
 
-        public int Write(Message message)
+        public int WriteToPriorityTable(List<MessagePrioritiesModel> senders)
         {
             int count = 0;
-            //TODO: add functionality to write single message to inbox table, return number of lines (should always be 1)
             using (var db = new MessageDbContext())
             {
-                var messageModel = new MessagesModel()
+                foreach (MessagePrioritiesModel sender in senders)
                 {
-                    messageId = message.Id,
-                    internalDate = (long)message.InternalDate //Make sure this saves properly
-                };
-                db.MessagesModels.Add(messageModel);
+                    db.MessagePrioritiesModels.Add(sender);
+                }
                 count = db.SaveChanges();
             }
             return count;
         }
+
+        //public int Write(Message message)
+        //{
+        //    int count = 0;
+        //    //TODO: add functionality to write single message to inbox table, return number of lines (should always be 1)
+        //    using (var db = new MessageDbContext())
+        //    {
+        //        var messageModel = new MessagesModel()
+        //        {
+        //            messageId = message.Id,
+        //            internalDate = (long)message.InternalDate //Make sure this saves properly
+        //        };
+        //        db.MessagesModels.Add(messageModel);
+        //        count = db.SaveChanges();
+        //    }
+        //    return count;
+        //}
 
         //TODO: implement
         // public bool RemoveMessage(Message message)
